@@ -61,7 +61,6 @@ window.SITE = {
       // Short lines shown under this entry
       highlights: [
         "Graduating with a CGPA of 3.5.",
-        "Scored 98% on the networking skills assessment (IPv4 subnetting and router and switch security in Cisco Packet Tracer).",
       ],
       modules: [
         { semester: "Web and systems", items: ["Capstone Project (Trash2Cash)", "Responsive Web Design and Development", "Fundamentals of UI/UX Design"] },

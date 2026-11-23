@@ -34,12 +34,6 @@
   const ym = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
   const jobs = [...(S.experience || [])].sort((a, b) => String(b.start).localeCompare(String(a.start)));
   const job = jobs[0];
-  if (job) {
-    const now = $("#now");
-    if (String(job.start) > ym) now.textContent = `Starting ${fmt(job.start)}: ${job.role}, ${job.org}`;
-    else if (!job.end || String(job.end) >= ym) now.textContent = `Now: ${job.role}, ${job.org}`;
-    if (now.textContent) now.hidden = false;
-  }
 
   $("#proof").innerHTML = `<b>${projects.length} projects</b> across ${esc(joinList(areas.map((a) => (a === "AI" ? a : a.toLowerCase()))))}`;
 
