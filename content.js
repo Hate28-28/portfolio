@@ -32,10 +32,10 @@ window.SITE = {
   // Each project "area" gets its own colour in the work log.
   // Add a new area here with any colour you like. Unknown areas get a colour automatically.
   areaColors: {
-    "AI": "#4C7DFF",
-    "Entrepreneurship": "#FFB020",
-    "Embedded systems": "#FF5A47",
-    "Virtual reality": "#B57BFF",
+    "AI": "#3A7BFF",
+    "Entrepreneurship": "#FF3B4E",
+    "Embedded systems": "#2BE38A",
+    "Virtual reality": "#C04BFF",
   },
 
   // Jobs, internships, roles. Newest dates appear first.

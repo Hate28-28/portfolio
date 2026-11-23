@@ -11,7 +11,7 @@
     return m ? `${MONTHS[+m - 1]} ${y}` : y;
   };
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const RGB = ["#4C6FFF", "#9B6BFF", "#FF4FA3", "#FF5A47", "#FFB020", "#18C3A0"];
+  const RGB = ["#FF3B4E", "#FFB020", "#2BE38A", "#22D3EE", "#3A7BFF", "#A35BFF", "#FF3BD4"];
 
   /* ---------- Text bindings ---------- */
   document.querySelectorAll("[data-bind]").forEach((el) => {
@@ -92,129 +92,9 @@
     if (soundOn) play("click");
   });
   document.addEventListener("pointerdown", (e) => {
-    if (e.button !== 0 || e.target.closest("#sound-toggle, #music-toggle")) return;
+    if (e.button !== 0 || e.target.closest("#sound-toggle")) return;
     if (e.target.closest(".key, .mini-key")) play("key");
     else if (e.target.closest("a, button, .card")) play("click");
-  });
-
-  /* ---------- Background music: a slow, quiet ambient loop made live ---------- */
-  const MUSIC_VOLUME = 0.12; // 0 = silent, 1 = loud
-  const hz = (m) => 440 * Math.pow(2, (m - 69) / 12); // MIDI note to frequency
-  // Am9, Fmaj7, Cmaj7, Em7 (MIDI notes)
-  const CHORDS = [
-    [45, 57, 60, 64, 71],
-    [41, 57, 60, 64, 65],
-    [48, 55, 59, 64, 67],
-    [40, 55, 59, 62, 67],
-  ];
-  const MELODY = [69, 71, 72, 74, 76, 79, 81]; // A minor, gentle upper notes
-  const BAR = 8; // seconds per chord
-  let music = null;
-
-  const makeReverb = (ac) => {
-    const len = ac.sampleRate * 4;
-    const buf = ac.createBuffer(2, len, ac.sampleRate);
-    for (let ch = 0; ch < 2; ch++) {
-      const d = buf.getChannelData(ch);
-      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6);
-    }
-    const c = ac.createConvolver();
-    c.buffer = buf;
-    return c;
-  };
-
-  const startMusic = () => {
-    const ac = audio();
-    if (!ac || music) return;
-    const master = ac.createGain();
-    master.gain.setValueAtTime(0.0001, ac.currentTime);
-    master.gain.exponentialRampToValueAtTime(MUSIC_VOLUME, ac.currentTime + 3);
-    const lp = ac.createBiquadFilter();
-    lp.type = "lowpass";
-    lp.frequency.value = 1400;
-    const verb = makeReverb(ac);
-    const wet = ac.createGain();
-    wet.gain.value = 0.7;
-    lp.connect(master);
-    lp.connect(verb).connect(wet).connect(master);
-    master.connect(ac.destination);
-
-    const pad = (notes, t) => {
-      notes.forEach((m, n) => {
-        [-6, 6].forEach((cents) => {
-          const o = ac.createOscillator();
-          o.type = n === 0 ? "sine" : "triangle";
-          o.frequency.value = hz(m);
-          o.detune.value = cents;
-          const g = ac.createGain();
-          const peak = (n === 0 ? 0.09 : 0.035);
-          g.gain.setValueAtTime(0.0001, t);
-          g.gain.exponentialRampToValueAtTime(peak, t + 2.5);
-          g.gain.setValueAtTime(peak, t + BAR - 1);
-          g.gain.exponentialRampToValueAtTime(0.0001, t + BAR + 2);
-          o.connect(g).connect(lp);
-          o.start(t);
-          o.stop(t + BAR + 2.2);
-        });
-      });
-    };
-    const pluck = (m, t) => {
-      const o = ac.createOscillator();
-      o.type = "sine";
-      o.frequency.value = hz(m);
-      const o2 = ac.createOscillator();
-      o2.type = "sine";
-      o2.frequency.value = hz(m) * 2;
-      const g = ac.createGain();
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.06, t + 0.01);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 2.8);
-      const g2 = ac.createGain();
-      g2.gain.value = 0.25;
-      o.connect(g).connect(lp);
-      o2.connect(g2).connect(g);
-      o.start(t); o2.start(t);
-      o.stop(t + 3); o2.stop(t + 3);
-    };
-
-    let bar = 0;
-    let next = ac.currentTime + 0.1;
-    const schedule = () => {
-      while (next < ac.currentTime + BAR) {
-        pad(CHORDS[bar % CHORDS.length], next);
-        // a few unhurried notes per chord, sometimes none
-        const count = Math.floor(Math.random() * 3) + (bar % 2);
-        for (let i = 0; i < count; i++) {
-          pluck(MELODY[Math.floor(Math.random() * MELODY.length)], next + 1 + Math.random() * (BAR - 2));
-        }
-        next += BAR;
-        bar++;
-      }
-    };
-    schedule();
-    music = { master, timer: setInterval(schedule, 2000) };
-  };
-
-  const stopMusic = () => {
-    if (!music || !ctx) return;
-    const { master, timer } = music;
-    clearInterval(timer);
-    master.gain.cancelScheduledValues(ctx.currentTime);
-    master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-    master.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.5);
-    setTimeout(() => master.disconnect(), 1700);
-    music = null;
-  };
-
-  const musicBtn = $("#music-toggle");
-  musicBtn.addEventListener("click", () => {
-    const on = musicBtn.getAttribute("aria-pressed") !== "true";
-    setToggle(musicBtn, on);
-    on ? startMusic() : stopMusic();
-  });
-  document.addEventListener("visibilitychange", () => {
-    if (!ctx || !music) return;
-    document.hidden ? ctx.suspend() : ctx.resume();
   });
 
   /* ---------- Keyboard name ---------- */
@@ -312,6 +192,7 @@
     .map(
       (p) => `
       <article class="card" data-area="${esc(p.area)}" style="--c:${colorFor(p.area)}">
+        <span class="current" aria-hidden="true"></span>
         <div class="card-meta"><span class="area">${esc(p.area)}</span><span class="date">${fmt(p.date)}</span></div>
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.summary)}</p>
@@ -384,11 +265,11 @@
           `<li style="--c:${color}"><strong>${esc(x[titleKey])}</strong><span class="org">${esc(x[subKey])}</span><span class="when">${fmt(x.start)} to ${fmt(x.end)}</span></li>`
       )
       .join("");
-  $("#experience").innerHTML = timeline(S.experience, "role", "org", "#FF4FA3");
-  $("#education").innerHTML = timeline(S.education, "title", "org", "#4C6FFF");
+  $("#experience").innerHTML = timeline(S.experience, "role", "org", "#FF3B4E");
+  $("#education").innerHTML = timeline(S.education, "title", "org", "#3A7BFF");
 
   /* ---------- Toolkit ---------- */
-  const KIT = ["#4C6FFF", "#9B6BFF", "#18C3A0", "#FFB020", "#FF4FA3", "#FF5A47"];
+  const KIT = ["#FF3B4E", "#2BE38A", "#3A7BFF", "#A35BFF"];
   $("#kit").innerHTML = (S.toolkit || [])
     .map(
       (g, i) =>
