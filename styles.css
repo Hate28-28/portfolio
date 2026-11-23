@@ -331,3 +331,19 @@ main, .foot { position: relative; z-index: 1; }
 .hl li::marker { color: var(--green); }
 .mods-body { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 560px) { .mods-body { grid-template-columns: 1fr; } }
+
+/* Compact project cards */
+.card { padding: var(--s-300); }
+.card h3 { margin-top: var(--s-100); }
+.card .summary { color: var(--muted); }
+.cards { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+.tags { padding-top: var(--s-200); }
+.more { margin-top: var(--s-100); }
+.more summary { display: inline-flex; align-items: center; gap: var(--s-50); cursor: pointer; list-style: none; color: var(--ink); }
+.more summary::-webkit-details-marker { display: none; }
+.more summary .ph { color: var(--muted); transition: transform var(--t-move) var(--ease); }
+.more[open] summary .ph { transform: rotate(45deg); }
+.more .points { margin-top: var(--s-100); animation: modsIn var(--t-move) var(--ease); }
+@media (max-width: 1000px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+@media (pointer: coarse) { .more summary { min-height: 44px; } }

@@ -60,6 +60,7 @@ window.SITE = {
       // Modules show as a dropdown under this entry, in groups.
       // Short lines shown under this entry
       highlights: [
+        "Graduating with a CGPA of 3.5.",
         "Scored 98% on the networking skills assessment (IPv4 subnetting and router and switch security in Cisco Packet Tracer).",
       ],
       modules: [
@@ -81,14 +82,14 @@ window.SITE = {
       area: "AI",
       date: "2026-09",
       summary:
-        "A rule based chatbot built in Voiceflow that walks users through PC hardware faults step by step.",
-      // "points" show as bullet points on the card
+        "A Voiceflow chatbot that guides users through PC hardware faults.",
+      // "points" show in a small "What I did" dropdown on the card
       points: [
         "Mapped fault symptoms into conditional decision trees that guide users through methodical hardware checks.",
         "Scoped clear diagnostic paths so non experts can isolate common hardware issues without hitting dead ends.",
         "Added automatic escalation when a problem needs a technician.",
       ],
-      tags: ["Voiceflow", "Decision trees", "Hardware diagnostics"],
+      tags: ["Voiceflow", "Decision trees"],
       link: "", // optional: a demo, GitHub or video URL
     },
     {
@@ -96,23 +97,13 @@ window.SITE = {
       area: "Web development",
       date: "2026", // capstone project; change to "YYYY-MM" if you want the exact month
       summary:
-        "My part of our group capstone project: the Staff module of the Trash2Cash web platform.",
+        "The staff side of our group capstone web app.",
       points: [
         "Built the Staff module using HTML, CSS and JavaScript.",
         "Implemented workflows for reviewing user submissions and managing inventory.",
         "Worked with teammates to keep the staff interface in line with the platform's data flow.",
       ],
-      tags: ["HTML", "CSS", "JavaScript", "Capstone project", "Group project"],
-      link: "",
-    },
-    {
-      title: "Mediclace Health Tech Venture",
-      area: "Entrepreneurship",
-      date: "2026-06",
-      concept: true, // shows a "Concept" label so it isn't mistaken for a shipped product
-      summary:
-        "Developed the product features, financial framework and Business Model Canvas for a wearable health monitoring necklace with my group, and presented it.",
-      tags: ["Business Model Canvas", "Financial framework", "Group project"],
+      tags: ["HTML", "CSS", "JavaScript"],
       link: "",
     },
     {
@@ -120,13 +111,13 @@ window.SITE = {
       area: "Embedded systems",
       date: "2026-06",
       summary:
-        "An automated contactless waste bin prototype built around an Arduino Uno R3.",
+        "An Arduino bin that opens its lid without touch.",
       points: [
         "Programmed the prototype in C++ with two ultrasonic sensors for more reliable detection than a single sensor.",
         "Controlled the lid with a micro servo motor, paired with status LEDs for clear visual feedback.",
         "Tested sensor response and actuation thresholds to keep opening and closing consistent.",
       ],
-      tags: ["Arduino Uno R3", "C++", "Ultrasonic sensors", "Servo motor", "IoT"],
+      tags: ["Arduino", "C++", "Sensors"],
       link: "",
     },
     {
@@ -134,13 +125,13 @@ window.SITE = {
       area: "Virtual reality",
       date: "2026-05",
       summary:
-        "A VR training prototype in Unity that teaches beginners how to assemble a PC, step by step.",
+        "A Unity VR app that teaches beginners to build a PC.",
       points: [
         "Built the simulation with the XR Interaction Toolkit, using socket snapping so components click into place.",
         "Guided the assembly flow with world space UI canvases, audio cues and blue holographic guidance meshes.",
         "Structured the experience around beginner hardware understanding and clear spatial feedback.",
       ],
-      tags: ["Unity", "XR Interaction Toolkit", "VR prototyping", "UX"],
+      tags: ["Unity", "XR Toolkit"],
       link: "",
     },
     {
@@ -149,8 +140,8 @@ window.SITE = {
       date: "2026-03",
       concept: true,
       summary:
-        "Business model, brand identity and structural design for a wearable memory recording device assisted by AI.",
-      tags: ["Brand identity", "Product design", "Business Model Canvas"],
+        "Brand and business design for a wearable AI memory device.",
+      tags: ["Branding", "Product design"],
       link: "",
     },
   ],

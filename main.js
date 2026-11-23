@@ -52,7 +52,7 @@
         <h3 class="heading-6">${esc(p.title)}</h3>
         ${p.image ? `<img class="shot" src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy">` : ""}
         <p class="summary body-3">${esc(p.summary)}</p>
-        ${p.points && p.points.length ? `<ul class="points body-6">${p.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+        ${p.points && p.points.length ? `<details class="more"><summary class="body-5">What I did<i class="ph ph-plus" aria-hidden="true"></i></summary><ul class="points body-6">${p.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></details>` : ""}
         ${p.link ? `<a class="card-link body-5" href="${esc(p.link)}" target="_blank" rel="noopener">Open project <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>` : ""}
         ${p.tags && p.tags.length ? `<ul class="tags caption-4">${p.tags.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : ""}
       </article>`
@@ -122,6 +122,7 @@
     edu && {
       q: "What are you studying?",
       a: `I'm doing a ${esc(edu.title)} at ${esc(edu.org)}, from ${fmt(edu.start)} to ${fmt(edu.end)}. ` +
+        `${(edu.highlights || []).find((h) => /CGPA/i.test(h)) ? `I'm ${esc((edu.highlights || []).find((h) => /CGPA/i.test(h)).replace(/\.$/, "").replace(/^./, (c) => c.toLowerCase()))}. ` : ""}` +
         `Through my coursework I've built ${projects.length} projects across ${esc(joinList(areas.map((x) => (x === "AI" ? x : x.toLowerCase()))))}, which you can see under Selected work.`,
     },
     job && {
