@@ -48,10 +48,11 @@
   $("#cards").innerHTML = projects
     .map(
       (p) => `<article class="card" style="--c:${colorFor(p.area)}">
-        <div class="card-top caption-4"><span class="area">${esc(p.area)}</span><span class="date">${fmt(p.date)}</span></div>
+        <div class="card-top caption-4"><span class="area">${esc(p.area)}${p.concept ? `<span class="concept">Concept</span>` : ""}</span><span class="date">${fmt(p.date)}</span></div>
         <h3 class="heading-6">${esc(p.title)}</h3>
         ${p.image ? `<img class="shot" src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy">` : ""}
         <p class="summary body-3">${esc(p.summary)}</p>
+        ${p.points && p.points.length ? `<ul class="points body-6">${p.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
         ${p.link ? `<a class="card-link body-5" href="${esc(p.link)}" target="_blank" rel="noopener">Open project <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>` : ""}
         ${p.tags && p.tags.length ? `<ul class="tags caption-4">${p.tags.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : ""}
       </article>`
@@ -69,15 +70,26 @@
   $("#facts").innerHTML = (S.facts || []).map((f) => `<div class="body-6"><dt>${esc(f.label)}</dt><dd>${esc(f.value)}</dd></div>`).join("");
   const items = [
     ...(S.experience || []).map((x) => ({ t: x.role, o: x.org, s: x.start, e: x.end, c: "#2BE38A" })),
-    ...(S.education || []).map((x) => ({ t: x.title, o: x.org, s: x.start, e: x.end, c: "#3A7BFF" })),
+    ...(S.education || []).map((x) => ({ t: x.title, o: x.org, s: x.start, e: x.end, c: "#3A7BFF", mods: x.modules || [], hl: x.highlights || [] })),
   ].sort((a, b) => String(b.s).localeCompare(String(a.s)));
+  const modulesHtml = (mods) => {
+    if (!mods || !mods.length) return "";
+    const groups = mods.map((m) => (typeof m === "string" ? { items: [m] } : m));
+    const flat = groups.every((g) => !g.semester);
+    const total = groups.reduce((n, g) => n + (g.items || []).length, 0);
+    if (!total) return "";
+    const body = flat
+      ? `<ul class="mod-list">${groups.flatMap((g) => g.items).map((i) => `<li>${esc(i)}</li>`).join("")}</ul>`
+      : groups.map((g) => `<div class="mod-group"><h4 class="caption-4">${esc(g.semester || "Other")}</h4><ul class="mod-list">${(g.items || []).map((i) => `<li>${esc(i)}</li>`).join("")}</ul></div>`).join("");
+    return `<details class="mods"><summary class="body-5">Modules I've taken (${total})<i class="ph ph-plus" aria-hidden="true"></i></summary><div class="mods-body body-6">${body}</div></details>`;
+  };
   $("#timeline").innerHTML = items
     .map((x) => {
       const upcoming = String(x.s) > ym;
       const current = !upcoming && (!x.e || String(x.e) >= ym);
       return `<li style="--c:${x.c}"><span class="when caption-5">${fmt(x.s)} to ${fmt(x.e)}</span>${
         upcoming ? `<span class="badge caption-4">Upcoming</span>` : current ? `<span class="badge caption-4">Current</span>` : ""
-      }<strong class="body-2">${esc(x.t)}</strong><span class="org body-6">${esc(x.o)}</span></li>`;
+      }<strong class="body-2">${esc(x.t)}</strong><span class="org body-6">${esc(x.o)}</span>${x.hl && x.hl.length ? `<ul class="hl body-6">${x.hl.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>` : ""}${modulesHtml(x.mods)}</li>`;
     })
     .join("");
 
@@ -102,17 +114,57 @@
   const edu = (S.education || [])[0];
   const fact = (l) => ((S.facts || []).find((f) => f.label === l) || {}).value;
   const tools = (S.toolkit || []).flatMap((g) => g.items);
+  const mail = `<a href="mailto:${esc(S.email)}">${esc(S.email)}</a>`;
+  const phoneList = (S.phones || []).map((p) => `<a href="tel:${esc(p.value.replace(/\s/g, ""))}">${esc(p.value)}</a> (${esc(p.label)})`);
+  const jobPlace = job ? (job.org.split(",").pop().trim()) : "";
+  const jobCountry = fact("Also in") && jobPlace && fact("Also in").startsWith(jobPlace) ? fact("Also in") : jobPlace;
   const FAQ = [
-    edu && { q: "What are you studying?", a: `A ${edu.title} at ${edu.org}, from ${fmt(edu.start)} to ${fmt(edu.end)}.` },
-    job && { q: "Where are you working?", a: `${String(job.start) > ym ? "I'm starting" : "I'm working"} as ${/^[aeiou]/i.test(job.role) ? "an" : "a"} ${job.role} at ${job.org}, from ${fmt(job.start)} to ${fmt(job.end)}.` },
-    { q: "What have you built?", a: `${projects.length} projects: ${joinList(projects.map((p) => p.title))}.` },
-    tools.length && { q: "Which tools do you use?", a: `${joinList(tools)}.` },
-    fact("Based in") && { q: "Where are you based?", a: `${fact("Based in")}${fact("Also in") ? `, and also ${fact("Also in")}` : ""}.` },
-    fact("Languages") && { q: "Which languages do you speak?", a: `${fact("Languages").replace(/, ([^,]*)$/, " and $1")}.` },
-    { q: "How can I get your CV?", a: `<a href="${esc(S.cv)}" target="_blank" rel="noopener">Download it here</a>, or email me at <a href="mailto:${esc(S.email)}">${esc(S.email)}</a>.`, html: true },
+    edu && {
+      q: "What are you studying?",
+      a: `I'm doing a ${esc(edu.title)} at ${esc(edu.org)}, from ${fmt(edu.start)} to ${fmt(edu.end)}. ` +
+        `Through my coursework I've built ${projects.length} projects across ${esc(joinList(areas.map((x) => (x === "AI" ? x : x.toLowerCase()))))}, which you can see under Selected work.`,
+    },
+    job && {
+      q: "Where are you working?",
+      a: (String(job.start) > ym
+          ? `From ${fmt(job.start)}${job.end ? ` to ${fmt(job.end)}` : ""} I'll be working as ${/^[aeiou]/i.test(job.role) ? "an" : "a"} ${esc(job.role)} at ${esc(job.org.split(",")[0])}`
+          : `Since ${fmt(job.start)} I've been working as ${/^[aeiou]/i.test(job.role) ? "an" : "a"} ${esc(job.role)} at ${esc(job.org.split(",")[0])}${job.end ? `, until ${fmt(job.end)}` : ""}`) +
+        `${jobCountry ? ` in ${esc(jobCountry)}` : ""}. ${edu ? `It runs alongside my ${esc(edu.title)} at ${esc(edu.org.split(" (")[0])}.` : ""}`,
+    },
+    {
+      q: "What have you built?",
+      a: `${projects.length} projects so far, newest first:<ul class="faq-ul">${projects
+        .map((p) => `<li><strong>${esc(p.title)}</strong> (${esc(p.area)}, ${fmt(p.date)}). ${esc(p.summary)}</li>`)
+        .join("")}</ul>`,
+    },
+    (S.toolkit || []).length && {
+      q: "Which tools and languages do you use?",
+      a: `Here's what I've used in my projects and coursework:<ul class="faq-ul">${S.toolkit
+        .map((g) => `<li><strong>${esc(g.group)}:</strong> ${esc(joinList(g.items))}.</li>`)
+        .join("")}</ul>`,
+    },
+    fact("Based in") && {
+      q: "Where are you based?",
+      a: `I'm based in ${esc(fact("Based in"))}${fact("Also in") ? `, and I also spend time in ${esc(fact("Also in"))}` : ""}` +
+        `${job && jobCountry ? `, where my internship at ${esc(job.org.split(",")[0])} takes place` : ""}. You can reach me by email wherever I am.`,
+    },
+    fact("Languages") && {
+      q: "Which languages do you speak?",
+      a: `I speak ${esc(fact("Languages").replace(/, ([^,]*)$/, " and $1"))}.`,
+    },
+    {
+      q: "Can I see more about a project?",
+      a: `Each card under Selected work shows what the project was, what I did and the tools I used. If you'd like more detail on any of them, email me at ${mail} and I'll walk you through it.`,
+    },
+    {
+      q: "How can I get your CV or contact you?",
+      a: `<a href="${esc(S.cv)}" target="_blank" rel="noopener">Download my CV here</a>. Email is the quickest way to reach me: ${mail}.` +
+        `${phoneList.length ? ` You can also call me on ${phoneList.join(" or ")}.` : ""}` +
+        `${S.linkedin ? ` I'm on <a href="${esc(S.linkedin)}" target="_blank" rel="noopener">LinkedIn</a> too.` : ""}`,
+    },
   ].filter(Boolean);
   $("#faq-list").innerHTML = FAQ.map(
-    (f) => `<details class="faq-item"><summary class="title-3">${esc(f.q)}<i class="ph ph-plus" aria-hidden="true"></i></summary><p class="answer body-3">${f.html ? f.a : esc(f.a)}</p></details>`
+    (f) => `<details class="faq-item"><summary class="title-3">${esc(f.q)}<i class="ph ph-plus" aria-hidden="true"></i></summary><div class="answer body-3">${f.a}</div></details>`
   ).join("");
   $("#faq-schema").textContent = JSON.stringify({
     "@context": "https://schema.org",
@@ -127,22 +179,42 @@
   if (reduced || !("IntersectionObserver" in window)) words.forEach((w) => w.classList.add("on"));
   else {
     const wo = new IntersectionObserver(
-      (en) => en.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("on"); wo.unobserve(e.target); } }),
+      (en) => en.forEach((e) => {
+        if (e.isIntersecting) e.target.classList.add("on");
+        else if (e.rootBounds && e.boundingClientRect.top > e.rootBounds.bottom - 1) e.target.classList.remove("on");
+      }),
       { rootMargin: "0px 0px -40% 0px" }
     );
     words.forEach((w) => wo.observe(w));
   }
 
-  /* ---------- Section reveals and nav highlight ---------- */
-  const reveals = $$(".reveal");
-  if (reduced || !("IntersectionObserver" in window)) reveals.forEach((r) => r.classList.add("in"));
+  /* ---------- Scroll animation: content fades in and out both ways ---------- */
+  const FX = [".hero", ".tagline", ".section-head", "#about-h", "#skills-h", "#faq-h", ".card", ".about-text", ".facts div", ".block-h", ".timeline li", ".skill-group", ".faq-item", ".contact-card", ".foot"];
+  const fxEls = $$(FX.join(","));
+  // stagger siblings so cards and list items arrive one after another
+  fxEls.forEach((el) => {
+    const sibs = [...el.parentElement.children].filter((c) => fxEls.includes(c));
+    const i = sibs.indexOf(el);
+    el.style.setProperty("--d", `${Math.min(i, 5) * 70}ms`);
+    el.classList.add("fx");
+  });
+  if (reduced || !("IntersectionObserver" in window)) fxEls.forEach((el) => el.classList.add("in"));
   else {
-    const ro = new IntersectionObserver(
-      (en) => en.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); ro.unobserve(e.target); } }),
-      { threshold: 0.08 }
+    const fo = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("in");
+        } else {
+          e.target.classList.remove("in");
+          // remember which side it left from, so it comes back from that side
+          e.target.dataset.pos = e.boundingClientRect.top < (e.rootBounds ? e.rootBounds.top : 0) ? "above" : "below";
+        }
+      }),
+      { rootMargin: "-6% 0px -6% 0px", threshold: 0.1 }
     );
-    reveals.forEach((r) => ro.observe(r));
+    fxEls.forEach((el) => fo.observe(el));
   }
+
   const navLinks = $$(".nav ul a");
   const no = new IntersectionObserver(
     (en) => en.forEach((e) => {
