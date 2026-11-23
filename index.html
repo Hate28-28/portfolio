@@ -5,87 +5,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mohamad Yassine</title>
   <meta name="description" content="Portfolio of Mohamad Yassine: projects across software, hardware, VR and AI." />
-  <meta name="theme-color" content="#0F3D2E" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F3D2E'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23C9A24A' stroke-width='3'/%3E%3C/svg%3E" />
+  <meta name="theme-color" content="#F2F4F9" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='7' fill='%23fff' stroke='%2311131C' stroke-width='2'/%3E%3Crect x='6' y='24' width='20' height='3' rx='1.5' fill='%234C6FFF'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <header class="board hero" id="top">
-    <svg class="traces" aria-hidden="true"></svg>
-    <nav class="nav">
-      <a class="mark" href="#top" data-bind="initials"></a>
-      <ul>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#toolkit">Toolkit</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-    <div class="hero-body">
-      <h1 class="name" data-bind="name"></h1>
+  <nav class="nav" aria-label="Main">
+    <a class="logo" href="#top" aria-label="Back to top"><span data-bind="initials"></span></a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#toolkit">Toolkit</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero" id="top">
+    <h1 class="keyboard" id="keyboard"></h1>
+    <div class="hero-text">
       <p class="headline" data-bind="headline"></p>
       <p class="intro" data-bind="intro"></p>
       <div class="actions">
-        <a class="btn btn-gold" id="cv-link" download>Download CV</a>
-        <a class="btn btn-line" href="#work">See projects</a>
+        <a class="btn btn-primary" id="cv-link" target="_blank" rel="noopener">Download CV</a>
+        <a class="btn btn-ghost" href="#work">See projects</a>
       </div>
     </div>
+    <p class="hint" aria-hidden="true">Try typing the letters in my name</p>
   </header>
 
   <main id="main">
-    <section class="board work-wrap" id="work" aria-labelledby="work-h">
-      <div class="section work">
-        <div class="section-head">
-          <h2 id="work-h">Work log</h2>
-          <p class="count" id="project-count"></p>
-        </div>
-        <div class="filters" id="filters" role="group" aria-label="Filter projects by area"></div>
-        <div id="log"></div>
+    <section class="section" id="work" aria-labelledby="work-h">
+      <div class="section-head">
+        <h2 id="work-h">Work log</h2>
+        <p class="count" id="project-count" aria-live="polite"></p>
       </div>
+      <div class="filters" id="filters" role="group" aria-label="Filter projects by area"></div>
+      <div class="cards" id="cards"></div>
     </section>
 
-    <section class="section about" id="about" aria-labelledby="about-h">
+    <section class="section" id="about" aria-labelledby="about-h">
       <h2 id="about-h">About</h2>
       <div class="about-grid">
         <p class="about-text" data-bind="about"></p>
-        <dl class="facts" id="facts"></dl>
+        <dl class="spec" id="facts"></dl>
       </div>
-      <div class="timeline-grid">
+      <div class="timelines">
         <div>
           <h3>Experience</h3>
-          <ul class="plain-list" id="experience"></ul>
+          <ol class="timeline" id="experience"></ol>
         </div>
         <div>
           <h3>Education</h3>
-          <ul class="plain-list" id="education"></ul>
+          <ol class="timeline" id="education"></ol>
         </div>
       </div>
     </section>
 
-    <section class="section toolkit" id="toolkit" aria-labelledby="toolkit-h">
+    <section class="section" id="toolkit" aria-labelledby="toolkit-h">
       <h2 id="toolkit-h">Toolkit</h2>
-      <div class="parts" id="parts"></div>
+      <div class="kit" id="kit"></div>
+    </section>
+
+    <section class="section contact" id="contact" aria-labelledby="contact-h">
+      <div class="contact-panel">
+        <h2 id="contact-h">Get in touch</h2>
+        <div class="email-row">
+          <a class="email" id="email-link"></a>
+          <button class="btn btn-primary" id="copy-email" type="button">Copy email</button>
+        </div>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+        <ul class="contact-list" id="contact-list"></ul>
+      </div>
     </section>
   </main>
 
-  <footer class="board contact" id="contact">
-    <h2>Get in touch</h2>
-    <div class="email-row">
-      <a class="email" id="email-link"></a>
-      <button class="btn btn-gold" id="copy-email" type="button">Copy email</button>
-    </div>
-    <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
-    <ul class="contact-list" id="contact-list"></ul>
-    <div class="foot">
-      <span id="year"></span>
-      <a href="#top">Back to top</a>
-    </div>
+  <footer class="foot">
+    <span id="year"></span>
+    <a href="#top">Back to top</a>
   </footer>
+
+  <div class="audio-dock" role="group" aria-label="Sound settings">
+    <button class="toggle" id="music-toggle" type="button" aria-pressed="false">
+      <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M9 18V6l11-2v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg>
+      <span class="label">Music</span>
+      <span class="switch" aria-hidden="true"></span>
+      <span class="state">Off</span>
+    </button>
+    <button class="toggle" id="sound-toggle" type="button" aria-pressed="true">
+      <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="label">Click sounds</span>
+      <span class="switch" aria-hidden="true"></span>
+      <span class="state">On</span>
+    </button>
+  </div>
 
   <script src="content.js"></script>
   <script src="main.js"></script>
