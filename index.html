@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mohamad Yassine</title>
+  <meta name="description" content="Portfolio of Mohamad Yassine: projects across software, hardware, VR and AI." />
+  <meta name="theme-color" content="#0F3D2E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F3D2E'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23C9A24A' stroke-width='3'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="board hero" id="top">
+    <svg class="traces" aria-hidden="true"></svg>
+    <nav class="nav">
+      <a class="mark" href="#top" data-bind="initials"></a>
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#toolkit">Toolkit</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="hero-body">
+      <h1 class="name" data-bind="name"></h1>
+      <p class="headline" data-bind="headline"></p>
+      <p class="intro" data-bind="intro"></p>
+      <div class="actions">
+        <a class="btn btn-gold" id="cv-link" download>Download CV</a>
+        <a class="btn btn-line" href="#work">See projects</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="board work-wrap" id="work" aria-labelledby="work-h">
+      <div class="section work">
+        <div class="section-head">
+          <h2 id="work-h">Work log</h2>
+          <p class="count" id="project-count"></p>
+        </div>
+        <div class="filters" id="filters" role="group" aria-label="Filter projects by area"></div>
+        <div id="log"></div>
+      </div>
+    </section>
+
+    <section class="section about" id="about" aria-labelledby="about-h">
+      <h2 id="about-h">About</h2>
+      <div class="about-grid">
+        <p class="about-text" data-bind="about"></p>
+        <dl class="facts" id="facts"></dl>
+      </div>
+      <div class="timeline-grid">
+        <div>
+          <h3>Experience</h3>
+          <ul class="plain-list" id="experience"></ul>
+        </div>
+        <div>
+          <h3>Education</h3>
+          <ul class="plain-list" id="education"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section toolkit" id="toolkit" aria-labelledby="toolkit-h">
+      <h2 id="toolkit-h">Toolkit</h2>
+      <div class="parts" id="parts"></div>
+    </section>
+  </main>
+
+  <footer class="board contact" id="contact">
+    <h2>Get in touch</h2>
+    <div class="email-row">
+      <a class="email" id="email-link"></a>
+      <button class="btn btn-gold" id="copy-email" type="button">Copy email</button>
+    </div>
+    <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+    <ul class="contact-list" id="contact-list"></ul>
+    <div class="foot">
+      <span id="year"></span>
+      <a href="#top">Back to top</a>
+    </div>
+  </footer>
+
+  <script src="content.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
