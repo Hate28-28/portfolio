@@ -165,7 +165,7 @@ window.SITE = {
     },
     {
       group: "Productivity",
-      items: ["Microsoft Word", "Microsoft Excel", "Microsoft PowerPoint"],
+      items: ["Microsoft Word", "Microsoft Excel", "Microsoft PowerPoint", "Figma", "Canva"],
     },
   ],
 
