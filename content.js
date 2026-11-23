@@ -5,7 +5,7 @@
   - Add a project: copy one { ... } block inside "projects",
     paste it at the top of the list, and change the text.
   - Dates use "YYYY-MM" (e.g. "2027-03"). The site sorts by date
-    and groups by year on its own, so order here doesn't matter.
+    on its own, so order here doesn't matter.
   - Keep the commas between blocks. Text goes inside "quotes".
 */
 
@@ -13,7 +13,7 @@ window.SITE = {
   name: "Mohamad Yassine",
   initials: "MY",
   headline: "I build things across software, hardware, VR and AI.",
-  // The big statement further down the page (lights up word by word as you scroll)
+  // The big statement under the top section (lights up word by word as you scroll)
   tagline: "I like knowing how things work all the way down, from the parts inside a desktop to the logic behind a chatbot.",
   intro:
     "IT student at Asia Pacific University. This page is a running log of what I've made and what I'm learning, updated as I go.",
@@ -23,7 +23,7 @@ window.SITE = {
   cv: "Mohamad-Yassine-CV.pdf", // the PDF sits in the same folder as index.html
 
   about:
-    "I like knowing how things work all the way down, from the parts inside a desktop to the logic behind a chatbot. Most of my projects mix more than one field: a VR app that teaches PC assembly, an Arduino bin that opens itself, a diagnostic bot for hardware faults.",
+    "Most of my projects mix more than one field: a VR app that teaches PC assembly, an Arduino bin that opens itself, a diagnostic bot for hardware faults.",
 
   facts: [
     { label: "Based in", value: "Kuala Lumpur, Malaysia" },
@@ -31,7 +31,7 @@ window.SITE = {
     { label: "Languages", value: "English, Arabic" },
   ],
 
-  // Each project "area" gets its own colour in the work log.
+  // Each project "area" gets its own colour.
   // Add a new area here with any colour you like. Unknown areas get a colour automatically.
   areaColors: {
     "AI": "#3A7BFF",
@@ -59,20 +59,11 @@ window.SITE = {
     },
   ],
 
-  // Each project is a part on the motherboard. Pick where it sits with "part":
-  //   "cpu"    the CPU socket (1 space)
-  //   "gpu"    the graphics card slot (1 space)
-  //   "ram"    the memory slots (4 spaces)
-  //   "ssd"    the M.2 drive slots (2 spaces)
-  //   "module" the small expansion slot (1 space)
-  //   "card"   the lower expansion slot (1 space)
-  // Leave "part" out and the site picks a free space for you.
-  // Optional: add  image: "photo.jpg"  to show a photo of the project
-  // (put the image file in the same folder as index.html).
+  // Your projects. Newest dates show first.
+  // Optional: add  image: "photo.jpg"  (file next to index.html) or  link: "https://..."
   projects: [
     {
       title: "PC Diagnostic Chatbot",
-      part: "cpu",
       area: "AI",
       date: "2026-09",
       summary:
@@ -82,7 +73,6 @@ window.SITE = {
     },
     {
       title: "Mediclace Health Tech Venture",
-      part: "ssd",
       area: "Entrepreneurship",
       date: "2026-06",
       summary:
@@ -92,7 +82,6 @@ window.SITE = {
     },
     {
       title: "Contactless Waste Management System",
-      part: "module",
       area: "Embedded systems",
       date: "2026-06",
       summary:
@@ -102,7 +91,6 @@ window.SITE = {
     },
     {
       title: "VR PC Building Simulator",
-      part: "gpu",
       area: "Virtual reality",
       date: "2026-05",
       summary:
@@ -112,7 +100,6 @@ window.SITE = {
     },
     {
       title: "Memory Hardware Concept",
-      part: "ram",
       area: "Entrepreneurship",
       date: "2026-03",
       summary:
