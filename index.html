@@ -2,103 +2,195 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mohamad Yassine</title>
-  <meta name="description" content="Portfolio of Mohamad Yassine: projects across software, hardware, VR and AI." />
-  <meta name="theme-color" content="#07090C" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='7' fill='%23fff' stroke='%2311131C' stroke-width='2'/%3E%3Crect x='6' y='24' width='20' height='3' rx='1.5' fill='%234C6FFF'/%3E%3C/svg%3E" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Mohamad Yassine: IT projects in AI, VR, hardware and embedded systems</title>
+  <meta name="description" content="Portfolio of Mohamad Yassine, an IT student at Asia Pacific University. Explore his projects as parts on a working motherboard and download his CV." />
+  <link rel="canonical" href="https://mohamad-yassine.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mohamad Yassine" />
+  <meta property="og:description" content="Power on the board and inspect each project like a part: AI, VR, embedded systems and more." />
+  <meta property="og:url" content="https://mohamad-yassine.vercel.app/" />
+  <meta property="og:image" content="https://mohamad-yassine.vercel.app/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://mohamad-yassine.vercel.app/og.png" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23181818'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23FF2E4D' stroke-width='3' stroke-dasharray='40 12' transform='rotate(-62 16 16)'/%3E%3Cpath d='M16 7v9' stroke='%23FF2E4D' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="icons/phosphor.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="intro-on">
   <a class="skip" href="#main">Skip to content</a>
 
+  <!-- Intro: hold the power button -->
+  <div class="intro" id="intro" role="dialog" aria-modal="true" aria-label="Intro">
+    <div class="intro-inner">
+      <p class="intro-name caption-3" data-bind="name"></p>
+      <button class="big-power" id="big-power" type="button" aria-describedby="intro-hint">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="track" cx="60" cy="60" r="54" />
+          <circle class="fill" cx="60" cy="60" r="54" pathLength="100" />
+        </svg>
+        <i class="ph ph-power" aria-hidden="true"></i>
+        <span class="sr">Power on</span>
+      </button>
+      <p class="intro-hint body-6" id="intro-hint">Press and hold to power on</p>
+    </div>
+    <button class="intro-skip body-6" id="intro-skip" type="button">Skip intro</button>
+  </div>
+
   <nav class="nav" aria-label="Main">
-    <a class="logo" href="#top" aria-label="Back to top"><span data-bind="initials"></span></a>
     <ul>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#toolkit">Toolkit</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a class="title-4" href="#top" data-nav="top">Board</a></li>
+      <li><a class="title-4" href="#work" data-nav="work">Work</a></li>
+      <li><a class="title-4" href="#setup" data-nav="setup">Setup</a></li>
+      <li><a class="title-4" href="#faq" data-nav="faq">Questions</a></li>
     </ul>
   </nav>
 
-  <header class="hero" id="top">
-    <h1 class="keyboard" id="keyboard"></h1>
-    <div class="hero-text">
-      <p class="headline" data-bind="headline"></p>
-      <p class="intro" data-bind="intro"></p>
-      <div class="actions">
-        <a class="btn btn-primary" id="cv-link" target="_blank" rel="noopener">Download CV</a>
-        <a class="btn btn-ghost" href="#work">See projects</a>
-      </div>
-    </div>
-    <p class="hint" aria-hidden="true">Try typing the letters in my name</p>
-  </header>
-  <div class="argb" aria-hidden="true"></div>
-
   <main id="main">
-    <section class="section" id="work" aria-labelledby="work-h">
-      <div class="section-head">
-        <h2 id="work-h">Work log</h2>
-        <p class="count" id="project-count" aria-live="polite"></p>
+    <section class="bench" id="top" aria-labelledby="name-h">
+      <header class="id">
+        <h1 class="heading-1 hero-h" id="name-h" data-bind="name"></h1>
+        <p class="sub title-1" data-bind="headline"></p>
+        <div class="cta-row">
+          <a class="btn btn-primary button-md cv-link" target="_blank" rel="noopener"><i class="ph ph-download-simple" aria-hidden="true"></i>Download CV</a>
+          <a class="btn btn-quiet button-md mail-link"><i class="ph ph-envelope-simple" aria-hidden="true"></i>Email me</a>
+        </div>
+        <p class="proof caption-2" id="proof"></p>
+      </header>
+
+      <div class="board-wrap" id="board-wrap">
+        <svg class="board" id="board" viewBox="-40 -14 680 792" role="img" aria-labelledby="board-title">
+          <title id="board-title">A motherboard. Each installed part is one of my projects.</title>
+        </svg>
+        <p class="board-hint caption-5"><span class="hint-mouse">Hover the board to probe it. Click any part to inspect that project.</span><span class="hint-touch">Tap any part on the board to inspect that project.</span></p>
       </div>
-      <div class="filters" id="filters" role="group" aria-label="Filter projects by area"></div>
-      <div class="cards" id="cards"></div>
+
+      <div class="status" aria-label="System status">
+        <div class="leds caption-5" aria-hidden="true">
+          <span data-led="cpu">CPU</span><span data-led="dram">DRAM</span><span data-led="vga">VGA</span><span data-led="boot">BOOT</span>
+        </div>
+        <div class="post" aria-hidden="true"><span class="ghost">88</span><span class="code" id="post-code">--</span></div>
+        <dl class="sensors">
+          <div><dt class="caption-5">CPU</dt><dd class="body-6"><span id="temp">--</span> °C</dd></div>
+          <div><dt class="caption-5">GPU fan</dt><dd class="body-6"><span id="rpm">0</span> rpm</dd></div>
+        </dl>
+      </div>
+
+      <section class="inspector" id="inspector" aria-live="polite" aria-label="Part inspector"></section>
+
+      <div class="controls">
+        <div class="modes" role="group" aria-label="Board views">
+          <button type="button" class="btn btn-quiet button-sm mode" id="mode-explode" aria-pressed="false">Exploded view</button>
+          <button type="button" class="btn btn-quiet button-sm mode" id="mode-xray" aria-pressed="false">Trace view</button>
+          <a class="btn btn-quiet button-sm" href="#setup" id="setup-link">Enter setup <kbd>DEL</kbd></a>
+        </div>
+        <div class="parts-list">
+          <h2 class="caption-4">Installed parts</h2>
+          <ul id="parts-list"></ul>
+        </div>
+      </div>
     </section>
 
-    <section class="section" id="about" aria-labelledby="about-h">
-      <h2 id="about-h">About</h2>
-      <div class="about-grid">
-        <p class="about-text" data-bind="about"></p>
-        <dl class="spec" id="facts"></dl>
-      </div>
-      <div class="timelines">
-        <div>
-          <h3>Experience</h3>
-          <ol class="timeline" id="experience"></ol>
+    <section class="explore reveal" aria-labelledby="explore-h">
+      <h2 class="heading-5" id="explore-h">How to explore this page</h2>
+      <ol class="steps">
+        <li><span class="n caption-3">1</span><div><h3 class="title-2">Power on the board</h3><p class="body-6">Press the red power button. Watch the current reach every part as it boots.</p></div></li>
+        <li><span class="n caption-3">2</span><div><h3 class="title-2">Inspect a part</h3><p class="body-6">Every installed part is a project. Click one to read what it is and how I built it.</p></div></li>
+        <li><span class="n caption-3">3</span><div><h3 class="title-2">Enter setup</h3><p class="body-6">Press DEL or scroll down for my background, skills and contact details.</p></div></li>
+      </ol>
+    </section>
+
+    <section class="tagline" aria-label="What drives my work">
+      <p class="heading-2 tagline-text" id="tagline"></p>
+    </section>
+
+    <section class="work reveal" id="work" aria-labelledby="work-h">
+      <h2 class="heading-3" id="work-h">What I work on</h2>
+      <p class="body-3 work-sub" id="work-sub"></p>
+      <div class="areas" id="areas"></div>
+    </section>
+
+    <section class="uefi reveal" id="setup" aria-labelledby="setup-h">
+      <div class="uefi-frame">
+        <header class="uefi-bar">
+          <h2 class="title-1" id="setup-h">Setup utility</h2>
+          <p class="clock caption-5" id="clock"></p>
+        </header>
+        <div class="uefi-tabs" role="tablist" aria-label="Setup pages">
+          <button class="title-3" role="tab" id="t-main" aria-controls="p-main" aria-selected="true">Main</button>
+          <button class="title-3" role="tab" id="t-boot" aria-controls="p-boot" aria-selected="false" tabindex="-1">Boot</button>
+          <button class="title-3" role="tab" id="t-drivers" aria-controls="p-drivers" aria-selected="false" tabindex="-1">Drivers</button>
+          <button class="title-3" role="tab" id="t-exit" aria-controls="p-exit" aria-selected="false" tabindex="-1">Exit</button>
         </div>
-        <div>
-          <h3>Education</h3>
-          <ol class="timeline" id="education"></ol>
+        <div class="uefi-body">
+          <div class="uefi-pages">
+            <div class="page" role="tabpanel" id="p-main" aria-labelledby="t-main"></div>
+            <div class="page" role="tabpanel" id="p-boot" aria-labelledby="t-boot" hidden></div>
+            <div class="page" role="tabpanel" id="p-drivers" aria-labelledby="t-drivers" hidden></div>
+            <div class="page" role="tabpanel" id="p-exit" aria-labelledby="t-exit" hidden></div>
+          </div>
+          <aside class="uefi-help" id="uefi-help" aria-live="polite"></aside>
         </div>
+        <footer class="uefi-keys caption-5" aria-hidden="true">
+          <span><kbd>←</kbd><kbd>→</kbd> Select screen</span>
+          <span><kbd>Tab</kbd> Select item</span>
+          <span><kbd>Enter</kbd> Select</span>
+          <span><kbd>F10</kbd> Save and reboot</span>
+        </footer>
       </div>
     </section>
 
-    <section class="section" id="toolkit" aria-labelledby="toolkit-h">
-      <h2 id="toolkit-h">Toolkit</h2>
-      <div class="kit" id="kit"></div>
+    <section class="faq reveal" id="faq" aria-labelledby="faq-h">
+      <h2 class="heading-3" id="faq-h">Questions people ask</h2>
+      <div class="faq-list" id="faq-list"></div>
     </section>
 
-    <section class="section contact" id="contact" aria-labelledby="contact-h">
-      <div class="contact-panel">
-        <h2 id="contact-h">Get in touch</h2>
-        <div class="email-row">
-          <a class="email" id="email-link"></a>
-          <button class="btn btn-primary" id="copy-email" type="button">Copy email</button>
-        </div>
-        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
-        <ul class="contact-list" id="contact-list"></ul>
+    <section class="final reveal" aria-labelledby="final-h">
+      <h2 class="heading-3" id="final-h">Want the full picture?</h2>
+      <p class="body-3">My CV has everything on this board in one page.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary button-md cv-link" target="_blank" rel="noopener"><i class="ph ph-download-simple" aria-hidden="true"></i>Download CV</a>
+        <a class="btn btn-quiet button-md mail-link"><i class="ph ph-envelope-simple" aria-hidden="true"></i>Email me</a>
       </div>
+      <p class="body-6 done-line">Done looking around? <button type="button" class="linklike" id="shutdown-btn">Shut down the board</button></p>
     </section>
   </main>
 
-  <footer class="foot">
+  <div class="shutdown" id="shutdown" role="dialog" aria-modal="true" aria-labelledby="shutdown-h" hidden>
+    <div class="shutdown-inner">
+      <span class="dot" aria-hidden="true"></span>
+      <h2 class="heading-3" id="shutdown-h">Thanks for stopping by</h2>
+      <p class="body-3">The board is off. It's safe to close this tab, or power it back on.</p>
+      <div class="cta-row">
+        <button type="button" class="btn btn-primary button-md" id="power-again"><i class="ph ph-power" aria-hidden="true"></i>Power on again</button>
+        <a class="btn btn-quiet button-md cv-link" target="_blank" rel="noopener"><i class="ph ph-download-simple" aria-hidden="true"></i>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot caption-5">
     <span id="year"></span>
-    <a href="#top">Back to top</a>
+    <span class="foot-links"><a href="privacy.html">Privacy</a><a href="#top">Back to the board <i class="ph ph-arrow-up" aria-hidden="true"></i></a></span>
   </footer>
 
+  <div class="probe caption-5" id="probe" aria-hidden="true"></div>
+
   <div class="audio-dock" role="group" aria-label="Sound settings">
-    <button class="toggle" id="sound-toggle" type="button" aria-pressed="true">
-      <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <span class="label">Click sounds</span>
+    <button class="toggle body-5" id="sound-toggle" type="button" aria-pressed="true">
+      <i class="ph ph-speaker-high" aria-hidden="true"></i>
+      <span class="label">Sounds</span>
       <span class="switch" aria-hidden="true"></span>
-      <span class="state">On</span>
+      <span class="state caption-5">On</span>
     </button>
   </div>
 
+  <script type="application/ld+json" id="faq-schema"></script>
   <script src="content.js"></script>
   <script src="main.js"></script>
 </body>

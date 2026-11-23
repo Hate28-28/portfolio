@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "Phosphor";
+  src: url("./Phosphor.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+.ph { font-family: "Phosphor" !important; speak: never; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.ph.ph-power:before { content: "\e3da"; }
+.ph.ph-speaker-high:before { content: "\e44a"; }
+.ph.ph-speaker-slash:before { content: "\e45a"; }
+.ph.ph-download-simple:before { content: "\e20c"; }
+.ph.ph-envelope-simple:before { content: "\e218"; }
+.ph.ph-arrow-up:before { content: "\e08e"; }
+.ph.ph-arrow-left:before { content: "\e058"; }
+.ph.ph-arrow-right:before { content: "\e06c"; }
+.ph.ph-arrow-up-right:before { content: "\e092"; }
+.ph.ph-cpu:before { content: "\e610"; }
+.ph.ph-linkedin-logo:before { content: "\e2ee"; }
+.ph.ph-phone:before { content: "\e3b8"; }
+.ph.ph-copy:before { content: "\e1ca"; }
+.ph.ph-arrow-counter-clockwise:before { content: "\e038"; }
+.ph.ph-list:before { content: "\e2f0"; }
+.ph.ph-x:before { content: "\e4f6"; }

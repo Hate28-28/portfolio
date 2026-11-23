@@ -13,6 +13,8 @@ window.SITE = {
   name: "Mohamad Yassine",
   initials: "MY",
   headline: "I build things across software, hardware, VR and AI.",
+  // The big statement further down the page (lights up word by word as you scroll)
+  tagline: "I like knowing how things work all the way down, from the parts inside a desktop to the logic behind a chatbot.",
   intro:
     "IT student at Asia Pacific University. This page is a running log of what I've made and what I'm learning, updated as I go.",
 
@@ -33,7 +35,7 @@ window.SITE = {
   // Add a new area here with any colour you like. Unknown areas get a colour automatically.
   areaColors: {
     "AI": "#3A7BFF",
-    "Entrepreneurship": "#FF3B4E",
+    "Entrepreneurship": "#FFB020",
     "Embedded systems": "#2BE38A",
     "Virtual reality": "#C04BFF",
   },
@@ -57,27 +59,40 @@ window.SITE = {
     },
   ],
 
+  // Each project is a part on the motherboard. Pick where it sits with "part":
+  //   "cpu"    the CPU socket (1 space)
+  //   "gpu"    the graphics card slot (1 space)
+  //   "ram"    the memory slots (4 spaces)
+  //   "ssd"    the M.2 drive slots (2 spaces)
+  //   "module" the small expansion slot (1 space)
+  //   "card"   the lower expansion slot (1 space)
+  // Leave "part" out and the site picks a free space for you.
+  // Optional: add  image: "photo.jpg"  to show a photo of the project
+  // (put the image file in the same folder as index.html).
   projects: [
     {
       title: "PC Diagnostic Chatbot",
+      part: "cpu",
       area: "AI",
       date: "2026-09",
       summary:
-        "An interactive decision-tree workflow that walks users through desktop hardware faults, with scripted diagnostic branches and automatic escalation when a problem needs a technician.",
-      tags: ["Voiceflow", "Decision-tree workflow", "Hardware diagnostics"],
+        "An interactive decision tree workflow that walks users through desktop hardware faults, with scripted diagnostic branches and automatic escalation when a problem needs a technician.",
+      tags: ["Voiceflow", "Decision tree workflow", "Hardware diagnostics"],
       link: "", // optional: a demo, GitHub or video URL
     },
     {
       title: "Mediclace Health Tech Venture",
+      part: "ssd",
       area: "Entrepreneurship",
       date: "2026-06",
       summary:
-        "Co-developed the product features, financial framework and Business Model Canvas for a wearable health-monitoring necklace, and presented it as a group.",
+        "Developed the product features, financial framework and Business Model Canvas for a wearable health monitoring necklace with my group, and presented it.",
       tags: ["Business Model Canvas", "Financial framework", "Group project"],
       link: "",
     },
     {
       title: "Contactless Waste Management System",
+      part: "module",
       area: "Embedded systems",
       date: "2026-06",
       summary:
@@ -87,19 +102,21 @@ window.SITE = {
     },
     {
       title: "VR PC Building Simulator",
+      part: "gpu",
       area: "Virtual reality",
       date: "2026-05",
       summary:
-        "A Unity app for hands-on PC assembly training in VR, built with the XR Interaction Toolkit so users can pick up, place and connect real components.",
+        "A Unity app for practical PC assembly training in VR, built with the XR Interaction Toolkit so users can pick up, place and connect real components.",
       tags: ["Unity", "XR Interaction Toolkit", "VR prototyping"],
       link: "",
     },
     {
       title: "Memory Hardware Concept",
+      part: "ram",
       area: "Entrepreneurship",
       date: "2026-03",
       summary:
-        "Business model, brand identity and structural design for a wearable, AI-assisted memory recording device.",
+        "Business model, brand identity and structural design for a wearable memory recording device assisted by AI.",
       tags: ["Brand identity", "Product design", "Business Model Canvas"],
       link: "",
     },
